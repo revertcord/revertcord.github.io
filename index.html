@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Restorecord</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e0e11;
+      --fg: #f1f1f1;
+      --accent: #00ffee;
+      --accent-dark: #008b86;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: var(--bg);
+      color: var(--fg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+      text-shadow: 0 0 10px var(--accent);
+    }
+
+    p, ul {
+      font-size: 1.2rem;
+      max-width: 700px;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      background: none;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      padding: 0.75rem 2rem;
+      text-decoration: none;
+      font-size: 1rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: var(--accent);
+      color: #000;
+      box-shadow: 0 0 15px var(--accent);
+    }
+
+    .code-container {
+      position: relative;
+      display: inline-block;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    code {
+      background-color: #1a1a1d;
+      padding: 1rem;
+      border: 1px solid var(--accent-dark);
+      border-radius: 10px;
+      color: var(--accent);
+      font-family: monospace;
+      display: block;
+      white-space: pre-wrap;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: background 0.3s;
+    }
+
+    .copy-btn:hover {
+      background: var(--accent-dark);
+      color: #fff;
+    }
+
+    .path-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .path-text {
+      background-color: #1a1a1d;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--accent-dark);
+      border-radius: 10px;
+      color: var(--accent);
+      font-family: monospace;
+    }
+
+    footer {
+      margin-top: auto;
+      font-size: 0.9rem;
+      color: #666;
+      padding: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Restorecord</h1>
+  <p>
+    Revert Discord's layout and restore your sanity.<br />
+    Requires <strong>Vencord</strong>, a <a href="https://github.com/Vencord/Installer/releases/latest/download/VencordInstallerCli.exe" style="color: var(--accent);">client mod</a> for Discord.
+  </p>
+
+  <a class="btn" href="https://vencord.dev" target="_blank">Install Vencord</a>
+  <a class="btn" href="./settings.json" target="_blank" style="margin-top: 1rem;">Download settings.json</a>
+
+  <p>Place the downloaded <code>settings.json</code> into the following folder:</p>
+
+  <div class="path-container">
+    <span class="path-text" id="path">%appdata%\Vencord\settings</span>
+    <button class="copy-btn" onclick="copyPath()">Copy</button>
+  </div>
+
+  <p>Then, in Discord's settings under Vencord → Quick CSS, paste one of the following:</p>
+
+  <div class="code-container">
+    <code id="css-stable">
+/* STABLE VERSION */
+@import url("https://raw.githubusercontent.com/HackVogel/RevertCord/refs/heads/main/RevertCord.css");
+    </code>
+    <button class="copy-btn" onclick="copyCode('css-stable')">Copy</button>
+  </div>
+
+  <div class="code-container">
+    <code id="css-beta">
+/* BETA (EXPERIMENTAL) VERSION */
+@import url("https://raw.githubusercontent.com/HackVogel/RevertCord/refs/heads/main/BetaCord.css");
+    </code>
+    <button class="copy-btn" onclick="copyCode('css-beta')">Copy</button>
+  </div>
+
+  <div class="code-container">
+    <code id="css-nocolor">
+/* WITHOUT PROFILE COLORS */
+@import url("https://raw.githubusercontent.com/HackVogel/RevertCord/refs/heads/main/RevertCord-without-profile-colors.css");
+    </code>
+    <button class="copy-btn" onclick="copyCode('css-nocolor')">Copy</button>
+  </div>
+
+
+  <footer>
+    &copy; 2025 Restorecord. Made for the community.
+  </footer>
+
+  <script>
+    function copyCode(id) {
+      const code = document.getElementById(id).innerText.trim();
+      navigator.clipboard.writeText(code).then(() => {
+        alert("CSS code copied to clipboard!");
+      }).catch(err => {
+        alert("Failed to copy: " + err);
+      });
+    }
+
+    function copyPath() {
+      const path = document.getElementById("path").innerText;
+      navigator.clipboard.writeText(path).then(() => {
+        alert("Path copied to clipboard!");
+      }).catch(err => {
+        alert("Failed to copy path: " + err);
+      });
+    }
+  </script>
+</body>
+</html>
